@@ -1,4 +1,4 @@
-import { signup } from "./auth/auth";
+import { signup } from "../auth/auth";
 
 export default function Register() {
   return (
