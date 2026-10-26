@@ -1,25 +1,20 @@
-const bcrypt = require("bcrypt");
+"use server";
+import bcrypt from "bcrypt";
+
+import { db } from "../../lib/db";
 
 export async function signup(formData: FormData) {
-  const name = formData.get("name");
+  const name = formData.get("name")?.toString();
   const email = formData.get("email");
-  const password = formData.get("password");
+  const password = formData.get("password")?.toString();
 
-  const hashedPassword = await bcrypt.hash(password);
+  if (password) {
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const response = await db.query(
+      "INSERT INTO users(name, email, password_hash)" + "VALUES ($1, $2, $3)",
+      [name, email, hashedPassword],
+    );
 
-  const data = {
-    name: name,
-    email: email,
-    password: hashedPassword,
-  };
-
-  const response = await fetch("./route.ts", {
-    headers: {
-      "Content-Type": "application/json",
-    },
-    method: "POST",
-    body: JSON.stringify(data),
-  });
-
-  console.log(await response.json());
+    console.log(response.rows);
+  }
 }
