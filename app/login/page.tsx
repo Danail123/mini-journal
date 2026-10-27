@@ -1,6 +1,11 @@
+import { cookies } from "next/headers";
 import { signup } from "../auth/auth";
+import { decrypt } from "@/lib/sessions";
 
-export default function Register() {
+export default async function Register() {
+  const cookie = (await cookies()).get("session")?.value;
+  const session = await decrypt(cookie);
+
   return (
     <div className="main">
       <form action={signup}>
@@ -18,6 +23,7 @@ export default function Register() {
         </div>
         <button type="submit">Sign Up</button>
       </form>
+      <div className="">{session?.name}</div>
     </div>
   );
 }

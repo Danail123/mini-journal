@@ -30,8 +30,6 @@ export default function Home() {
     const response = await fetch(`/api/posts?date=${date}`);
     const posts = await response.json();
 
-    console.log(await posts);
-
     console.table(
       posts.map((post: Post) => ({
         id: post.id,
@@ -71,8 +69,6 @@ export default function Home() {
       },
       body: JSON.stringify({ id }),
     });
-
-    console.log(await response.json());
 
     fetchPosts();
   };
