@@ -15,7 +15,7 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
 
   const date = searchParams.get("date");
-  console.log(date);
+  console.log("DATE: ", date);
 
   const result = await db.query(
     `SELECT *

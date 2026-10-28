@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { type SubmitEvent } from "react";
+import Link from "next/link";
 
 const URL = "/api/posts";
 
@@ -28,8 +29,6 @@ export default function Home() {
 
     const response = await fetch(`/api/posts?date=${date}`);
     const posts = await response.json();
-
-    console.log(await posts);
 
     console.table(
       posts.map((post: Post) => ({
@@ -71,8 +70,6 @@ export default function Home() {
       body: JSON.stringify({ id }),
     });
 
-    console.log(await response.json());
-
     fetchPosts();
   };
 
@@ -87,6 +84,7 @@ export default function Home() {
   return (
     <div className="main w-1/2 mx-auto flex flex-col gap-4 ">
       <div className="form mx-auto">
+        <Link href="./login">Sign Up</Link>
         <form
           id="info-form"
           onSubmit={handleSubmit}
